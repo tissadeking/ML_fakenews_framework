@@ -105,42 +105,32 @@ for mode in range(len(modell)):
 
             input = {"x_dict": x_dict,
                      "y_dict": y_dict,
-                     "X": x_col,
-                     "y": y_col, "model": model}
+                     "model": model}
             # call the query function to trigger/invoke the serverless function on each partition
             response_content = query(url=root_url + index_es + "/fakenews",
                                      method="POST",
                                      payload=input)
             return response_content
 
-        que = queue.Queue()
-        threads = list()
-        for ith in range(len(dataarr)):
-            #start tracemalloc library to get ram usage in bytes
-            tracemalloc.start()
-            x = threading.Thread(target=lambda q, arg1: q.put(querycall(arg1)), args=(que, dataarr[ith]))
-            threads.append(x)
-            x.start()
-            current_usage, peak_usage = tracemalloc.get_traced_memory()
-            ramusagearr.append(current_usage)
-            # stopping the tracemalloc library
-            tracemalloc.stop()
-
-        # Join all the threads
-        for t in threads:
-            t.join()
-
-        # Check thread's return value
-        #while not que.empty():
-        for i in range(len(dataarr)):
-            result = que.get()
-            print('for partition ', i + 1, ': ', result)  # response for each partition
-            accuracyarr.append(result['accuracy (validation)'])              # append the accuracy for each partition to the initial empty accuracy array
+        ex = concurrent.futures.ThreadPoolExecutor(max_workers=8)
+        results = ex.map(querycall, dataarr)
+        real_results = list(results)
+        for ith in range(len(real_results)):
+            result = real_results[ith]
+            print('for partition ', ith + 1, ': ', result)  # response for each partition
+            accuracyarr.append(result[
+                                   'accuracy (validation)'])  # append the accuracy for each partition to the initial empty accuracy array
             testaccuracyarr.append(result['accuracy (test)'])
             # append the parameters for each partition to the parameter dictionary declared earlier
-            dx = str(i)
+            dx = str(ith)
             parameterdict[dx] = result['best parameters']
-
+        
+        current_usage, peak_usage = tracemalloc.get_traced_memory()
+        ramusagearr.append(current_usage)
+        # stopping the tracemalloc library
+        tracemalloc.stop()
+        
+        
         #Get the best parameters from the entire partitions when each of the eight models is selected
         global bestparamarr
         if model == 'pac':
