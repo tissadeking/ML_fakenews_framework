@@ -30,11 +30,11 @@ def query(url, method, payload=None):
 #Choose model from [pac, mnb, svc, dt, kn, rf, log, mlpc]
 #Type pac for PA Classifier OR mnb for Multinomial NB OR svc for Support Vector Classifier OR \ndt for Decision Tree OR kn for K Neighbors Classifier OR rf for Random Forest Classifier OR \nlog for Logistic Regression OR mlpc for Multilayer Perceptron Classifier (Neural Network)
 #modell = ['pac', 'mnb', 'log', 'svc', 'dt', 'kn', 'rf', 'mlpc']
-modell = ['pac']
+modell = ['mnb', 'mlpc']
 
 #choose number of partitions you desire, choose 1 if your desired learning is not distributed learning
-#narr = [1, 5, 10, 20, 30]
-narr = [10]
+narr = [1, 5, 10, 20, 30]
+#narr = [10]
 for mode in range(len(modell)):
     model = modell[mode]
     for npart in range(len(narr)):
