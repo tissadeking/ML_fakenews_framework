@@ -107,6 +107,7 @@ t0 = time.time()
 ex = concurrent.futures.ThreadPoolExecutor()
 results = ex.map(querycall, dataarr)
 real_results = list(results)
+print('real results: ', real_results)
 
 '''#SECOND METHOD
 que = queue.Queue()
