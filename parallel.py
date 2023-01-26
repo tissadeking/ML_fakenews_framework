@@ -9,7 +9,7 @@ import os.path
 import csv
 import tracemalloc
 import threading
-import concurrent
+import concurrent.futures
 
 def query(url, method, payload=None):
     res = requests.Response()
