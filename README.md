@@ -1,5 +1,5 @@
 # ML_fakenews_framework 
-The function fakenews has already been built and pushed and also deployed on OpenFaas as serverless function. It's in the repository fakenews_serverless. The essence of this ML framework is to be able to use the serverless function deployed on OpenFaas to training ML models.
+The function fakenews has already been built and pushed and also deployed on OpenFaas as serverless function. It's in the repository fakenews_serverless. The essence of this ML framework is to be able to use the serverless function deployed on OpenFaas to training ML models in a distributed fashion.
 
 ## Steps
 Step 1: Open your terminal, clone the ML_fakenews_framework repository into your local machine.
