@@ -37,3 +37,9 @@ Step 13: To perform distributed learning with the model(s) being trained on the 
 Step 14: To perform distributed learning with the model(s) being trained on the data partitions one after the other, run the command: python3 sequential.py
 
 Step 15: You can also make use of another dataset by copying the dataset into the ML_fakenews_framework directory and changing the variables: data_path, x_col and y_col at lines 47 to 49 in the parallel.py file or sequential.py file as the case may be.
+
+## Parallel Distributed Learning Flow Chart
+![Description of Image](parallel_flow_chart3.png)
+
+## Sequential Distributed Learning Flow Chart
+![Description of Image](sequential_flow_chart3.png)
